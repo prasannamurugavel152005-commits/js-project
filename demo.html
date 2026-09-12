@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Water Quality Monitor (Live)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+</head>
+<body style="font-family:Arial; text-align:center;">
+
+<h2>Water Quality Monitoring System</h2>
+
+<p>Temperature: <span id="temp">--</span> °C</p>
+<p>pH Value: <span id="ph">--</span></p>
+<p>Turbidity: <span id="turb">--</span></p>
+
+<canvas id="chart" width="400" height="200"></canvas>
+
+<script>
+const channelID = "YOUR_CHANNEL_ID";
+
+let tempData = [];
+let labels = [];
+
+const ctx = document.getElementById('chart').getContext('2d');
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Temperature',
+            data: tempData,
+            borderWidth: 2
+        }]
+    }
+});
+
+async function fetchData() {
+    const res = await fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?results=10`);
+    const data = await res.json();
+
+    let feeds = data.feeds;
+
+    tempData.length = 0;
+    labels.length = 0;
+
+    feeds.forEach((f, i) => {
+        tempData.push(parseFloat(f.field1));
+        labels.push(i);
+    });
+
+    let latest = feeds[feeds.length - 1];
+
+    document.getElementById("temp").innerText = latest.field1;
+    document.getElementById("ph").innerText = latest.field2;
+    document.getElementById("turb").innerText = latest.field3 == 1 ? "Dirty" : "Clean";
+
+    chart.update();
+}
+
+setInterval(fetchData, 5000);
+fetchData();
+</script>
+
+</body>
+</html>

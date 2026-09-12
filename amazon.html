@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Clone</title>
+    <style>
+        :root {
+            --amazon-blue: #131921;
+            --amazon-light: #232f3e;
+            --amazon-gold: #febd69;
+            --text-color: #ffffff;
+            --bg-color: #f3f3f3;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+        }           
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            color: #111;
+        }
+
+        header {
+            background: var(--amazon-blue);
+            color: var(--text-color);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--amazon-gold);
+        }
+
+        .search-bar {
+            flex: 1 1 420px;
+            margin: 10px 16px;
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .search-bar input {
+            border: none;
+            padding: 12px 14px;
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            background: #febd69;
+            border: none;
+            padding: 0 18px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-actions a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .hero {
+            background: linear-gradient(90deg, #232f3e 0%, #37475a 100%);
+            color: #fff;
+            padding: 40px 24px;
+        }
+
+        .hero-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            align-items: center;
+        }
+
+        .hero-copy {
+            grid-column: span 6;
+        }
+
+        .hero-copy h1 {
+            margin: 0;
+            font-size: 3rem;
+            line-height: 1.05;
+        }
+
+        .hero-copy p {
+            margin: 18px 0 0;
+            max-width: 520px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .hero-image {
+            grid-column: span 6;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+
+        .card img {
+            width: 100%;
+            display: block;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .card-title {
+            margin: 0 0 10px;
+            font-size: 18px;
+            line-height: 1.3;
+        }
+
+        .card-price {
+            margin: 0 0 8px;
+            font-weight: 700;
+            color: #b12704;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: #ff9900;
+            color: #111;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        footer {
+            background: #232f3e;
+            color: #ccc;
+            padding: 28px 24px;
+        }
+
+        footer .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        footer h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        footer a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-copy,
+            .hero-image {
+                grid-column: auto;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span>A</span>mazon Clone
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search Amazon" aria-label="Search Amazon">
+            <button type="button">Search</button>
+        </div>
+
+        <nav class="nav-actions" aria-label="Primary navigation">
+            <a href="#account">Hello, Sign in<br><strong>Account & Lists</strong></a>
+            <a href="#orders">Returns<br><strong>& Orders</strong></a>
+            <a href="#cart">Cart<br><strong>0</strong></a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <h1>Discover top deals, fast shipping, and great finds.</h1>
+                <p>Shop electronics, home essentials, fashion, and more from millions of products with easy checkout and reliable delivery.</p>
+            </div>
+            <div class="hero-image">
+                <img src="https://via.placeholder.com/540x320.png?text=Shop+Best+Sellers" alt="Amazon-style hero product display">
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="section-title">
+            <h2>Featured deals</h2>
+            <span>Delivering smiles every day</span>
+        </div>
+
+        <div class="product-grid">
+            <article class="card">
+                <img src="https://via.placeholder.com/400x260.png?text=Smart+Home+Speaker" alt="Smart home speaker">
+                <div class="card-content">
+                    <span class="card-badge">Deal of the Day</span>
+                    <h3 class="card-title">Echo Dot (5th Gen) Smart Speaker with Alexa</h3>
+                    <p class="card-price">$29.99</p>
+                    <p>Control music, smart home devices, and more with voice commands.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://via.placeholder.com/400x260.png?text=4K+TV" alt="4K television">
+                <div class="card-content">
+                    <span class="card-badge">Trending</span>
+                    <h3 class="card-title">55" 4K Ultra HD Smart TV</h3>
+                    <p class="card-price">$399.00</p>
+                    <p>Stream your favourite shows, movies, and sports in crisp 4K resolution.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://via.placeholder.com/400x260.png?text=Wireless+Earbuds" alt="Wireless earbuds">
+                <div class="card-content">
+                    <span class="card-badge">Best Seller</span>
+                    <h3 class="card-title">Wireless Noise Cancelling Earbuds</h3>
+                    <p class="card-price">$79.99</p>
+                    <p>Comfortable fit, long battery life, and premium sound with active noise cancellation.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://via.placeholder.com/400x260.png?text=Kitchen+Appliances" alt="Kitchen appliances">
+                <div class="card-content">
+                    <span class="card-badge">Limited Time</span>
+                    <h3 class="card-title">Air Fryer with Touchscreen Controls</h3>
+                    <p class="card-price">$89.99</p>
+                    <p>Cook crispy meals with little or no oil and easy cleanup after every use.</p>
+                </div>
+            </article>
+        </div>
+
+        <section class="features">
+            <article class="feature-card">
+                <h3>Amazon Prime</h3>
+                <p>Fast, free delivery, exclusive savings, Prime Video movies, music, and more.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Secure Checkout</h3>
+                <p>Shop with confidence. Your payment details stay safe with encrypted checkout.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Shop by Category</h3>
+                <p>Discover electronics, fashion, home, beauty, and hundreds of categories in one place.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Customer Favorites</h3>
+                <p>See the highest rated items and best-selling products chosen by shoppers every day.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <h3>Get to Know Us</h3>
+                <a href="#">About</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div>
+                <h3>Make Money with Us</h3>
+                <a href="#">Sell products</a>
+                <a href="#">Sell on Amazon Business</a>
+                <a href="#">Advertise Your Products</a>
+            </div>
+            <div>
+                <h3>Let Us Help You</h3>
+                <a href="#">Your Account</a>
+                <a href="#">Shipping Rates</a>
+                <a href="#">Returns & Replacements</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
